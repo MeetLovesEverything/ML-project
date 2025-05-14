@@ -4,16 +4,16 @@ import numpy as np
 import librosa
 import io
 import tensorflow as tf
-import uvicorn
 
 app = FastAPI()
 
-# Define language labels in the same order as during model training
+# Labels used during model training
 LANGUAGE_LABELS = [
-    "*Bengali","*Gujrati","*Hindi","*Kannada","*Malyalam","*Marathi","*Tamil","*Telgu","*Urdu","Gujrati"
+    "*Bengali", "*Gujrati", "*Hindi", "*Kannada", "*Malyalam",
+    "*Marathi", "*Tamil", "*Telgu", "*Urdu", "Gujrati"
 ]
 
-# Load the TensorFlow model (update path as needed)
+# Load model (adjust path if needed)
 model = tf.keras.models.load_model("app/language_model_new.h5")
 
 def extract_features(audio_bytes: bytes) -> np.ndarray:
@@ -29,10 +29,9 @@ async def predict_language(audio_file: UploadFile = File(...)):
         audio_bytes = await audio_file.read()
         features = extract_features(audio_bytes)
 
-        # Reshape to match the model input: (1, 40)
+        # Reshape to (1, 40) for model input
         input_tensor = np.expand_dims(features, axis=0)
 
-        # Predict
         predictions = model.predict(input_tensor)
         predicted_index = np.argmax(predictions, axis=1)[0]
         predicted_language = LANGUAGE_LABELS[predicted_index]
@@ -41,7 +40,3 @@ async def predict_language(audio_file: UploadFile = File(...)):
 
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))  # Render sets PORT env var
-    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
