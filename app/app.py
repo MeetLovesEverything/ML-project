@@ -14,7 +14,7 @@ LANGUAGE_LABELS = [
 ]
 
 # Load the TensorFlow model (update path as needed)
-model = tf.keras.models.load_model("app\language_model_new.h5")
+model = tf.keras.models.load_model("app/language_model_new.h5")
 
 def extract_features(audio_bytes: bytes) -> np.ndarray:
     """Extract MFCC features from audio bytes"""
