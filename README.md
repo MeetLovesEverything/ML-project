@@ -12,6 +12,11 @@ Leveraging advanced machine learning techniques, the system is designed to handl
 - **Chatbot Functionality**: Integrates a chatbot for interactive user engagement.
 - **Training Module**: Provides scripts and tools for training custom speech recognition models.
 
+## Working Videos of project and its workflow
+
+The video of the app and the model can be found at -https://drive.google.com/drive/folders/1EBOd8fOkCR1XUxLhG7jZwPFo9NDOz5hH?usp=sharing
+
+
 ## Project Structure
 
 ```
